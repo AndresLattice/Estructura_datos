@@ -2,7 +2,7 @@
 
 ## Principios
 
-1. El contrato del Carrito se implementa al menos dos veces, sobre
+1. El contrato del carrito se implementa al menos dos veces, sobre
    estructuras internas distintas, y una unica bateria de pruebas
    verifica ambas sin modificarse.
 2. No se usa collections.Counter como sustituto del conteo de cantidades.
@@ -15,10 +15,7 @@
 
 - Lenguaje: Python 3.11+
 - Dependencias permitidas: pytest
-- Estructuras internas permitidas para el Carrito: list, dict (son la
-  comparacion pedida por el ejercicio, no un sustituto de ella)
-- Entorno: debe ejecutarse en una maquina limpia con
-  `pip install pytest` y `pytest -v`
+- Estructuras internas permitidas para el Carrito: list, dict
 
 ## Definicion de terminado
 
@@ -28,9 +25,7 @@
 
 ## Uso de asistentes de IA
 
-Permitido para: redactar y estructurar spec.md, plan.md, tasks.md, las
-pruebas y las implementaciones a partir de decisiones que toma el autor
-del proyecto.
+Permitido para: redactar explicaciones, y ayudar a estructurar archivos como CONSTITUTION.md, spec.md, plan.md, tasks.md, las pruebas y las implementaciones a partir de decisiones que toma el autor (Yo) del proyecto.
+Tambien se uso para verificar que la estructura general del proyecto se alineara con la metodologia SDD, y para entender las alternativas de diseno antes de decidir cual usar.
 
-No permitido para: entregar codigo o decisiones que el autor no pueda
-explicar en la sustentacion.
+No permitido para: Tomar decisiones completamente de manera autonoma sin autorizacion
