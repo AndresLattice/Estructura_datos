@@ -19,9 +19,9 @@
 
 ## Definicion de terminado
 
-- [ ] Los criterios de aceptacion tienen prueba y pasan
-- [ ] Las dos implementaciones pasan la misma bateria sin modificarla
-- [ ] spec.md, plan.md y tasks.md reflejan el estado real
+- [x] Los criterios de aceptacion tienen prueba y pasan
+- [x] Las dos implementaciones pasan la misma bateria sin modificarla
+- [x] spec.md, plan.md y tasks.md reflejan el estado real
 
 ## Uso de asistentes de IA
 
