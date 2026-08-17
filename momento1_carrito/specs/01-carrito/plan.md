@@ -3,7 +3,7 @@
 **Especificacion de referencia:** `spec.md` v1.0
 
 **Nota:** este documento se redacto con ayuda de una IA (Claude), tanto
-para entender las alternativas de diseno como para redactar el
+para entender las alternativas de diseño como para redactar el
 contenido a partir de las decisiones tomadas por el autor. Ver
 `CONSTITUTION.md` para el detalle del uso permitido.
 

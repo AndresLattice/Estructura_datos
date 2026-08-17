@@ -130,7 +130,7 @@ que solo administra cantidades.
 ## 6. Criterios de aceptacion
 
 | ID | Criterio | Verificable mediante |
-|----|----------|----------------------|
+|---|---|---|
 | CA-01 | Un carrito recien creado esta vacio | test_carrito_nuevo_esta_vacio |
 | CA-02 | El total de un carrito vacio es 0 | test_total_de_carrito_vacio_es_cero |
 | CA-03 | Consultar la cantidad de un producto ausente en un carrito vacio devuelve 0 | test_cantidad_de_producto_ausente_en_carrito_vacio_es_cero |
