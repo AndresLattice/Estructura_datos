@@ -11,6 +11,7 @@ REPETICIONES = 5
 
 OPERACIONES = {
     "insertar": lambda lista, n: lista.insertar(0, -1),
+    "insertar_al_final": lambda lista, n: lista.insertar(lista.tamano(), -1),
     "insertar_ordenado": lambda lista, n: lista.insertar_ordenado(n // 2),
     "obtener": lambda lista, n: lista.obtener(n // 2),
     "buscar_lineal": lambda lista, n: lista.buscar_lineal(-1),
