@@ -8,5 +8,5 @@
 | T4 | Escribir plan.md con el diseño interno y alternativas | -- | Si |
 | T5 | Implementar lista_arreglo.py sobre un arreglo de capacidad fija | CA-01 a CA-22 | Si |
 | T6 | Verificar que las 22 pruebas pasan | CA-01 a CA-22 | Si |
-| T7 | Medir las cinco operaciones con timeit y graficar | -- | No |
-| T8 | Escribir decision.md con el calculo de los dos escenarios | -- | No |
+| T7 | Medir las cinco operaciones con timeit y graficar | -- | Si |
+| T8 | Escribir decision.md con el calculo de los dos escenarios | -- | Si |
