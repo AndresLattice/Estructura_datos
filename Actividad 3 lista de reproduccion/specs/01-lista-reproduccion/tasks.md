@@ -12,3 +12,4 @@
 | T8 | Parte C: `test_extremos.py` con los cuatro extremos, pasando | CA-08 a CA-14 | Sí |
 | T9 | Parte D: `medicion.py` con las cuatro operaciones sobre 5.000 canciones | — | Sí |
 | T10 | Parte D: `comparacion.md` con tabla teórico/medido, costo del día y recomendación | — | Sí |
+| T11 | Revisar los entregables contra el enunciado y corregir las diferencias | CA-07, CA-08 | Sí |

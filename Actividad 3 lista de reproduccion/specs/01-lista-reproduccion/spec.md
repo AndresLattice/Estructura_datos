@@ -1,6 +1,6 @@
 # Especificación — Lista de reproducción
 
-**Versión:** 1.1 · **Fecha:** 2026-09-18
+**Versión:** 1.2 · **Fecha:** 2026-09-18
 
 ## 1. Propósito
 
@@ -62,7 +62,7 @@ Si la precondición no se cumple: `PosicionInvalidaError`.
 | CA-05 | Una posición inválida lanza `PosicionInvalidaError` | `test_posicion_invalida` | test_lista.py |
 | CA-06 | `buscar` devuelve `-1` si la canción no está | `test_buscar_ausente` | test_lista.py |
 | CA-07 | Insertar 100 canciones seguidas no pierde ni desordena ninguna | `test_redimensionamiento` | test_lista.py |
-| CA-08 | Lista vacía: `eliminar` lanza error | `test_eliminar_de_vacia_lanza` | test_extremos.py |
+| CA-08 | Lista vacía: `obtener` y `eliminar` lanzan error y el tamaño sigue en 0 | `test_eliminar_de_vacia_lanza` | test_extremos.py |
 | CA-09 | Un elemento: insertar el primero deja tamaño 1 | `test_insertar_en_vacia_fija_cabeza_y_cola` | test_extremos.py |
 | CA-10 | Un elemento: borrarlo deja la lista vacía, consistente y con tamaño 0 | `test_eliminar_unico_deja_lista_consistente` | test_extremos.py |
 | CA-11 | Borrar el primero conserva el resto en orden | `test_eliminar_cabeza_con_varios` | test_extremos.py |
@@ -70,9 +70,12 @@ Si la precondición no se cumple: `PosicionInvalidaError`.
 | CA-13 | Tras muchas inserciones y borrados la lista sigue consistente | `test_insertar_y_eliminar_alternado` | test_extremos.py |
 | CA-14 | Recorrer devuelve todas las canciones en orden | `test_recorrer_en_orden` | test_extremos.py |
 
-`test_lista.py` corre con las dos listas. En `test_extremos.py`, CA-08 a CA-13
-verifican la lista enlazada (donde estos casos fallan con más facilidad) y
-CA-14 corre con las dos.
+`test_lista.py` corre con las dos listas. En `test_extremos.py`, CA-08 y CA-14
+corren con las dos, y CA-09 a CA-13 verifican la lista enlazada (donde estos
+casos fallan con más facilidad).
+
+`test_redimensionamiento` (CA-07) no lleva el identificador en su docstring
+porque `test_lista.py` no se puede modificar; su criterio es CA-07.
 
 ## 7. Historial de cambios
 
@@ -80,3 +83,4 @@ CA-14 corre con las dos.
 |---|---|---|---|
 | 1.0 | 2026-09-18 | Versión inicial | — |
 | 1.1 | 2026-09-18 | Los criterios de aceptación se alinean con las pruebas del curso (`test_lista.py`, `test_extremos.py`); CA-01 a CA-14 | El autor decidió usar el código base del curso; la spec se corrige antes del código |
+| 1.2 | 2026-09-18 | CA-08 exige también `obtener` sobre la lista vacía y corre con las dos listas; se aclara la trazabilidad de CA-07 | Revisión contra el enunciado |

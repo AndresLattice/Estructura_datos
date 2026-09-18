@@ -1,6 +1,6 @@
 # Plan Técnico — Lista de reproducción
 
-**Especificación de referencia:** `spec.md` v1.1
+**Especificación de referencia:** `spec.md` v1.2
 
 ## 1. Estructuras elegidas
 
@@ -13,6 +13,10 @@ del código base del curso, copiado en esta carpeta y completado:
 - **`ListaEnlazada`** (`lista_enlazada.py`, semana 6): cada canción vive en un
   nodo (`nodo.py`, semana 5) que apunta al siguiente. Guarda el primer nodo
   (`_cabeza`), el último (`_cola`) y el tamaño. No usa `list` ni `dict`.
+
+La "actividad anterior" del enunciado es la `ListaArreglo` y el archivo de
+pruebas `test_lista.py` de la guía de laboratorio de la semana 4. Ese contrato
+y esas pruebas son la referencia de esta actividad.
 
 `PosicionInvalidaError` se define una sola vez, en `lista_arreglo.py`, y la
 lista enlazada lo importa. Así `test_lista.py` reconoce el mismo error en las
