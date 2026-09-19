@@ -35,17 +35,13 @@ class ListaArreglo:
 
     # ---------- operaciones públicas ----------
 
-    def tamano(self):
-        contador = 0
-        while self._datos[contador]:
-            contador = contador +1
-            self._tamano = contador
-            return contador
+    def tamaño(self):
+        return self._tamaño
 
     def obtener(self, posicion):
         """Devuelve el elemento en `posicion`. O(1)."""
         self._validar(posicion, incluir_final=False)
-        pass
+        return self._datos[posicion]
 
     def insertar(self, posicion, elemento):
         """Inserta desplazando los elementos siguientes hacia la derecha."""
@@ -54,16 +50,29 @@ class ListaArreglo:
             self._redimensionar(self._capacidad * 2)
         # Desplaza desde el FINAL hacia atrás. ¿Por qué desde el final?
         # Si lo haces desde el principio, sobrescribes los datos.
-        pass
+        # muevo cada uno un lugar a la derecha para dejar libre "posicion"
+        for i in range(self._tamaño, posicion, -1):
+            self._datos[i] = self._datos[i - 1]
+        self._datos[posicion] = elemento
+        self._tamaño += 1
 
     def eliminar(self, posicion):
         """Elimina y devuelve el elemento, desplazando los siguientes."""
         self._validar(posicion, incluir_final=False)
-        pass
+        elemento = self._datos[posicion]
+        # muevo cada uno un lugar a la izquierda para tapar el hueco
+        for i in range(posicion, self._tamaño - 1):
+            self._datos[i] = self._datos[i + 1]
+        self._tamaño -= 1
+        self._datos[self._tamaño] = None
+        return elemento
 
     def buscar(self, elemento):
         """Devuelve la posición de la primera aparición, o -1."""
-        pass
+        for i in range(self._tamaño):
+            if self._datos[i] == elemento:
+                return i
+        return -1  # no lo encontré
 
     # ---------- auxiliares ----------
 
@@ -76,7 +85,11 @@ class ListaArreglo:
 
     def _redimensionar(self, nueva_capacidad):
         """Crea un arreglo mayor y copia los elementos. O(n)."""
-        pass
+        nuevos_datos = [None] * nueva_capacidad
+        for i in range(self._tamaño):
+            nuevos_datos[i] = self._datos[i]
+        self._datos = nuevos_datos
+        self._capacidad = nueva_capacidad
 
     # ---------- protocolo de Python ----------
 
