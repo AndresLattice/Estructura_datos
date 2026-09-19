@@ -10,4 +10,4 @@
 | T6 | Copiar `test_lista.py` y escribir `test_extremos.py`; sin implementación deben fallar (rojo) | CA-01 a CA-14 | Sí |
 | T7 | Partes B y C: copiar `nodo.py` y `lista_arreglo.py`, completar `lista_enlazada.py`; todas las pruebas pasan (verde) | CA-01 a CA-14 | Sí |
 | T8 | Parte D: `medicion.py` con las cuatro operaciones sobre 5.000 canciones | — | Sí |
-| T9 | Parte D: `comparacion.md` con tabla teórico/medido, costo del día y recomendación | — | No |
+| T9 | Parte D: `comparacion.md` con tabla teórico/medido, costo del día y recomendación | — | Sí |
