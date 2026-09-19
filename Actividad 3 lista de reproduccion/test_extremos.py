@@ -43,16 +43,19 @@ def test_eliminar_cabeza_con_varios():
     for i, v in enumerate(["a", "b", "c"]):
         lista.insertar(i, v)
     assert lista.eliminar(0) == "a"
+    assert lista.tamaño() == 2
     assert list(lista) == ["b", "c"]
     assert lista._cabeza.dato == "b"
 
 
 def test_eliminar_ultimo_actualiza_cola():
-    """CA-12: al borrar el último, la cola pasa al penúltimo."""
+    """CA-12: al borrar el último, el tamaño baja, el resto queda igual y la cola pasa al penúltimo."""
     lista = ListaEnlazada()
     for i, v in enumerate(["a", "b", "c"]):
         lista.insertar(i, v)
-    lista.eliminar(2)
+    assert lista.eliminar(2) == "c"
+    assert lista.tamaño() == 2
+    assert list(lista) == ["a", "b"]
     assert lista._cola.dato == "b"
     assert lista._cola.siguiente is None
 

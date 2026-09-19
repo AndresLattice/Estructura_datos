@@ -29,6 +29,9 @@ otro con el mismo nombre. Se corrigió importando ese mismo error en
 | Recorrer toda la lista | O(n) | 240,95 µs | O(n) | 198,06 µs |
 | Ir a la canción N (mitad) | O(1) | 0,32 µs | O(p) | 64,83 µs |
 | Borrar la canción actual (mitad) | O(n) | 162,30 µs | O(p) | 66,12 µs |
+| Insertar al final (no está en el perfil de la emisora) | O(1) amortizado | no medido | O(1) con `_cola` (O(n) sin ella) | no medido |
+
+**Decisión de diseño: `_cola`.** La lista enlazada guarda un puntero al último nodo (`_cola`). Con él, añadir al final cuesta O(1); sin él costaría O(n), porque habría que recorrer toda la cadena. La emisora nunca añade al final, así que esta decisión no cambia ninguna cifra de esta comparación, y por eso esa fila no se mide. Sí obliga a actualizar `_cola` al borrar el último o el único elemento, casos cubiertos por CA-10 y CA-12.
 
 **Lectura de la tabla**
 

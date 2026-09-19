@@ -1,6 +1,6 @@
 # Especificación — Lista de reproducción
 
-**Versión:** 1.2 · **Fecha:** 2026-09-18
+**Versión:** 1.3 · **Fecha:** 2026-09-18
 
 ## 1. Propósito
 
@@ -65,8 +65,8 @@ Si la precondición no se cumple: `PosicionInvalidaError`.
 | CA-08 | Lista vacía: `obtener` y `eliminar` lanzan error y el tamaño sigue en 0 | `test_eliminar_de_vacia_lanza` | test_extremos.py |
 | CA-09 | Un elemento: insertar el primero deja tamaño 1 | `test_insertar_en_vacia_fija_cabeza_y_cola` | test_extremos.py |
 | CA-10 | Un elemento: borrarlo deja la lista vacía, consistente y con tamaño 0 | `test_eliminar_unico_deja_lista_consistente` | test_extremos.py |
-| CA-11 | Borrar el primero conserva el resto en orden | `test_eliminar_cabeza_con_varios` | test_extremos.py |
-| CA-12 | Borrar el último conserva el resto | `test_eliminar_ultimo_actualiza_cola` | test_extremos.py |
+| CA-11 | Borrar el primero baja el tamaño y conserva el resto en orden | `test_eliminar_cabeza_con_varios` | test_extremos.py |
+| CA-12 | Borrar el último baja el tamaño y conserva el resto en orden | `test_eliminar_ultimo_actualiza_cola` | test_extremos.py |
 | CA-13 | Tras muchas inserciones y borrados la lista sigue consistente | `test_insertar_y_eliminar_alternado` | test_extremos.py |
 | CA-14 | Recorrer devuelve todas las canciones en orden | `test_recorrer_en_orden` | test_extremos.py |
 
@@ -84,3 +84,4 @@ porque `test_lista.py` no se puede modificar; su criterio es CA-07.
 | 1.0 | 2026-09-18 | Versión inicial | — |
 | 1.1 | 2026-09-18 | Los criterios de aceptación se alinean con las pruebas del curso (`test_lista.py`, `test_extremos.py`); CA-01 a CA-14 | El autor decidió usar el código base del curso; la spec se corrige antes del código |
 | 1.2 | 2026-09-18 | CA-08 exige también `obtener` sobre la lista vacía y corre con las dos listas; se aclara la trazabilidad de CA-07 | Revisión contra el enunciado |
+| 1.3 | 2026-09-18 | CA-11 y CA-12 exigen también el tamaño correcto | Segunda revisión contra el enunciado: borrar el primero o el último deja con facilidad un tamaño incorrecto |

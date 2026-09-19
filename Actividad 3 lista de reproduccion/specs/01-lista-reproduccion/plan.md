@@ -1,6 +1,6 @@
 # Plan Técnico — Lista de reproducción
 
-**Especificación de referencia:** `spec.md` v1.2
+**Especificación de referencia:** `spec.md` v1.3
 
 ## 1. Estructuras elegidas
 
@@ -36,6 +36,7 @@ dos listas.
 
 | Operación | Arreglo | Enlazada | Por qué |
 |---|---|---|---|
+| `insertar(final, x)` | O(1) amortizado | O(1) | La enlazada lo logra gracias a `_cola`; sin ella sería O(n) (hay que recorrer hasta el último nodo). Es una decisión de diseño |
 | `insertar(0, x)` | O(n) | O(1) | El arreglo corre todas las canciones; la enlazada solo cambia la cabeza |
 | `obtener(p)` | O(1) | O(p) | El arreglo va directo; la enlazada camina p nodos |
 | `eliminar(p)` | O(n) | O(p) | El arreglo cierra el hueco; la enlazada camina hasta el nodo anterior. Borrar el primero es O(1) |
