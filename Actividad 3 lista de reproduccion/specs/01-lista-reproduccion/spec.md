@@ -81,7 +81,6 @@ porque `test_lista.py` no se puede modificar; su criterio es CA-07.
 
 | Versión | Fecha | Cambio | Motivo |
 |---|---|---|---|
-| 1.0 | 2026-09-18 | Versión inicial | — |
-| 1.1 | 2026-09-18 | Los criterios de aceptación se alinean con las pruebas del curso (`test_lista.py`, `test_extremos.py`); CA-01 a CA-14 | El autor decidió usar el código base del curso; la spec se corrige antes del código |
+| 1.0 | 2026-09-18 | Versión inicial | — |   
 | 1.2 | 2026-09-18 | CA-08 exige también `obtener` sobre la lista vacía y corre con las dos listas; se aclara la trazabilidad de CA-07 | Revisión contra el enunciado |
 | 1.3 | 2026-09-18 | CA-11 y CA-12 exigen también el tamaño correcto | Segunda revisión contra el enunciado: borrar el primero o el último deja con facilidad un tamaño incorrecto |

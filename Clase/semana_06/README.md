@@ -28,3 +28,5 @@ una función a la vez y volviendo a ejecutar `pytest` hasta que pasen todas.
 No sustituyas la estructura exigida por `list`, `dict`, `set`, `deque`
 o `heapq`. Sí puedes usarlas como soporte interno (por ejemplo, un
 arreglo subyacente) siempre que lo justifiques en tu `plan.md`.
+
+
