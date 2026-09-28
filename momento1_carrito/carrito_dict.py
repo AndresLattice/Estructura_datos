@@ -1,49 +1,45 @@
 class Carrito:
     def __init__(self):
+        # La clave es el producto y el valor es su cantidad
         self._cantidades = {}
 
     def agregar(self, producto, cantidad):
-        # bool es subclase de int en Python, asi True/False pasarian como enteros:
-        # se excluyen a proposito para que agregar(prod, True) no cuente como 1.
-        if not isinstance(cantidad, int) or isinstance(cantidad, bool):
-            raise ValueError("cantidad debe ser un entero")
         if cantidad <= 0:
-            raise ValueError("cantidad debe ser mayor que 0")
-
-        # .get(producto, 0) devuelve la cantidad actual o 0 si el producto no existe.
-        # Con eso, "producto nuevo" y "acumular sobre lo que ya habia" se resuelven
-        # en una sola linea, sin un if para cada caso.
-        self._cantidades[producto] = self._cantidades.get(producto, 0) + cantidad
+            return False
+        if producto in self._cantidades:
+            self._cantidades[producto] = self._cantidades[producto] + cantidad
+        else:
+            self._cantidades[producto] = cantidad
+        return True
 
     def quitar(self, producto, cantidad):
-        if not isinstance(cantidad, int) or isinstance(cantidad, bool):
-            raise ValueError("cantidad debe ser un entero")
         if cantidad <= 0:
-            raise ValueError("cantidad debe ser mayor que 0")
-
+            return False
         if producto not in self._cantidades:
-            raise ValueError(f"'{producto}' no esta en el carrito")
-
-        disponible = self._cantidades[producto]
-        if cantidad > disponible:
-            raise ValueError(
-                f"no hay suficiente '{producto}' en el carrito "
-                f"(disponible: {disponible}, pedido: {cantidad})"
-            )
-
-        nueva_cantidad = disponible - cantidad
-        if nueva_cantidad == 0:
-            # Al llegar a 0 se borra la clave: el producto no queda "en 0",
-            # sale del carrito (asi esta_vacio y total no lo cuentan).
-            del self._cantidades[producto]
-        else:
-            self._cantidades[producto] = nueva_cantidad
+            return False
+        if cantidad > self._cantidades[producto]:
+            return False
+        self._cantidades[producto] = self._cantidades[producto] - cantidad
+        if self._cantidades[producto] == 0:
+            # Si llega a 0 el producto sale del carrito:
+            # se arma un diccionario nuevo sin esa clave
+            nuevo = {}
+            for p in self._cantidades:
+                if p != producto:
+                    nuevo[p] = self._cantidades[p]
+            self._cantidades = nuevo
+        return True
 
     def cantidad_de(self, producto):
-        return self._cantidades.get(producto, 0)
+        if producto in self._cantidades:
+            return self._cantidades[producto]
+        return 0
 
     def total(self):
-        return sum(self._cantidades.values())
+        total = 0
+        for producto in self._cantidades:
+            total = total + self._cantidades[producto]
+        return total
 
     def esta_vacio(self):
         return len(self._cantidades) == 0

@@ -1,87 +1,96 @@
-"""Mide las cuatro operaciones de la emisora en las dos listas.
+# Mide las cuatro operaciones de la emisora en las dos listas,
+# con 5000 canciones. Ejecutar: python medicion.py
 
-Lista de 5.000 canciones. Cada operación se repite varias veces y se
-promedia el tiempo de una sola ejecución. Ejecutar: python medicion.py
-"""
-
-from time import perf_counter
-
+import time
 from lista_arreglo import ListaArreglo
 from lista_enlazada import ListaEnlazada
 
 CANCIONES = 5000
-MITAD = CANCIONES // 2
+MITAD = 2500
 
-# Veces al día, dadas por la emisora.
-FRECUENCIAS = {
-    "insertar al principio": 40,
-    "recorrer toda la lista": 3,
-    "ir a la canción N": 200,
-    "borrar la canción actual": 15,
-}
+NOMBRES = ["insertar al principio", "recorrer toda la lista",
+           "ir a la cancion N", "borrar la cancion actual"]
+VECES_AL_DIA = [40, 3, 200, 15]
 
 
-def crear(Lista):
-    lista = Lista()
+def llenar(lista):
     for i in range(CANCIONES):
-        lista.insertar(0, i)
-    return lista
+        lista.insertar(lista.tamaño(), i)
 
 
-def promedio_us(operacion, repeticiones):
-    """Tiempo promedio de una ejecución de `operacion`, en microsegundos."""
-    total = 0
-    for _ in range(repeticiones):
-        inicio = perf_counter()
-        operacion()
-        total += perf_counter() - inicio
-    return total / repeticiones * 1_000_000
+def insertar_al_principio(lista):
+    repeticiones = 200
+    inicio = time.perf_counter()
+    for i in range(repeticiones):
+        lista.insertar(0, "x")
+    tiempo = time.perf_counter() - inicio
+    # Devuelvo la lista a 5000 canciones
+    for i in range(repeticiones):
+        lista.eliminar(0)
+    return tiempo / repeticiones * 1000000
 
 
-def medir(Lista):
-    lista = crear(Lista)
-    tiempos = {}
+def recorrer(lista):
+    repeticiones = 20
+    inicio = time.perf_counter()
+    for i in range(repeticiones):
+        lista.a_lista()
+    tiempo = time.perf_counter() - inicio
+    return tiempo / repeticiones * 1000000
 
-    tiempos["insertar al principio"] = promedio_us(lambda: lista.insertar(0, "x"), 200)
-    for _ in range(200):
-        lista.eliminar(0)  # devuelve la lista a 5.000 canciones
 
-    def recorrer():
-        for _ in lista:
-            pass
+def ir_a_la_cancion(lista):
+    repeticiones = 200
+    inicio = time.perf_counter()
+    for i in range(repeticiones):
+        lista.obtener(MITAD)
+    tiempo = time.perf_counter() - inicio
+    return tiempo / repeticiones * 1000000
 
-    tiempos["recorrer toda la lista"] = promedio_us(recorrer, 20)
-    tiempos["ir a la canción N"] = promedio_us(lambda: lista.obtener(MITAD), 200)
 
-    # Se mide solo eliminar; devolver la canción a su sitio no cuenta.
-    total = 0
+def borrar_la_cancion(lista):
+    # Solo se mide eliminar; volver a poner la cancion no cuenta
     repeticiones = 100
-    for _ in range(repeticiones):
-        inicio = perf_counter()
+    tiempo = 0
+    for i in range(repeticiones):
+        inicio = time.perf_counter()
         lista.eliminar(MITAD)
-        total += perf_counter() - inicio
+        tiempo = tiempo + (time.perf_counter() - inicio)
         lista.insertar(MITAD, "x")
-    tiempos["borrar la canción actual"] = total / repeticiones * 1_000_000
+    return tiempo / repeticiones * 1000000
 
+
+def medir(lista):
+    llenar(lista)
+    tiempos = []
+    tiempos.append(insertar_al_principio(lista))
+    tiempos.append(recorrer(lista))
+    tiempos.append(ir_a_la_cancion(lista))
+    tiempos.append(borrar_la_cancion(lista))
     return tiempos
 
 
-if __name__ == "__main__":
-    arreglo = medir(ListaArreglo)
-    enlazada = medir(ListaEnlazada)
+arreglo = medir(ListaArreglo())
+enlazada = medir(ListaEnlazada())
 
-    print(f"Lista de {CANCIONES} canciones. Tiempos en microsegundos por ejecución.\n")
-    print("| Operación | Veces al día | Arreglo (µs) | Enlazada (µs) |")
-    print("|---|---|---|---|")
-    total_arreglo = total_enlazada = 0
-    for nombre, veces in FRECUENCIAS.items():
-        print(f"| {nombre} | {veces} | {arreglo[nombre]:.2f} | {enlazada[nombre]:.2f} |")
-        total_arreglo += veces * arreglo[nombre]
-        total_enlazada += veces * enlazada[nombre]
+print("Lista de", CANCIONES, "canciones. Tiempos en microsegundos por ejecucion.")
+print()
+print("| Operacion | Veces al dia | Arreglo (us) | Enlazada (us) |")
+print("|---|---|---|---|")
+for i in range(4):
+    print(f"| {NOMBRES[i]} | {VECES_AL_DIA[i]} | {arreglo[i]:.2f} | {enlazada[i]:.2f} |")
 
-    print("\nCosto de un día de emisión (frecuencia × tiempo, en milisegundos):\n")
-    print("| Operación | Arreglo (ms) | Enlazada (ms) |")
-    print("|---|---|---|")
-    for nombre, veces in FRECUENCIAS.items():
-        print(f"| {nombre} | {veces * arreglo[nombre] / 1000:.3f} | {veces * enlazada[nombre] / 1000:.3f} |")
-    print(f"| **Total del día** | **{total_arreglo / 1000:.3f}** | **{total_enlazada / 1000:.3f}** |")
+print()
+print("Costo de un dia de emision (veces x tiempo, en milisegundos):")
+print()
+print("| Operacion | Arreglo (ms) | Enlazada (ms) |")
+print("|---|---|---|")
+total_arreglo = 0
+total_enlazada = 0
+for i in range(4):
+    dia_arreglo = VECES_AL_DIA[i] * arreglo[i] / 1000
+    dia_enlazada = VECES_AL_DIA[i] * enlazada[i] / 1000
+    total_arreglo = total_arreglo + dia_arreglo
+    total_enlazada = total_enlazada + dia_enlazada
+    print(f"| {NOMBRES[i]} | {dia_arreglo:.3f} | {dia_enlazada:.3f} |")
+print(f"| Total del dia | {total_arreglo:.3f} | {total_enlazada:.3f} |")

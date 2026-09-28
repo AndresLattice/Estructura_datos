@@ -23,7 +23,7 @@ constitucion del proyecto.
 | Alternativa | Ventaja | Por que se descarto |
 |---|---|---|
 | Lista de pares `[producto, cantidad]` | Simple de recorrer; no requiere que el producto sea hashable | Buscar, agregar o quitar un producto cuesta O(n) porque hay que recorrer la lista |
-| Diccionario `producto -> cantidad` | Buscar, agregar o quitar cuesta O(1) en promedio | Exige que `producto` sea hashable (en la practica no es una limitacion real, ya que se usan strings) |
+| Diccionario `producto -> cantidad` | Buscar y agregar cuesta O(1) en promedio | Exige que `producto` sea hashable (en la practica no es una limitacion real, ya que se usan strings) |
 | `collections.Counter` | Resolveria directamente la acumulacion de cantidades | Prohibido por la constitucion del proyecto |
 
 Ambas alternativas viables (lista y diccionario) se implementan para
@@ -34,7 +34,7 @@ comparar su complejidad.
 | Operacion | Lista de pares | Diccionario | Justificacion |
 |---|---|---|---|
 | `agregar` | O(n) | O(1) amortizado | La lista debe recorrerse para saber si el producto ya existe; el diccionario resuelve la busqueda por hash |
-| `quitar` | O(n) | O(1) amortizado | Misma razon que `agregar`: localizar el producto es lo que domina el costo |
+| `quitar` | O(n) | O(1) amortizado, O(n) si la cantidad llega a 0 | Localizar el producto cuesta lo mismo que en `agregar`; cuando la cantidad llega a 0 se arma una lista o diccionario nuevo sin ese producto, recorriendo todo el carrito |
 | `cantidad_de` | O(n) | O(1) amortizado | Busqueda por recorrido frente a busqueda por hash |
 | `total` | O(n) | O(n) | Ambas deben sumar la cantidad de cada producto registrado |
 | `esta_vacio` | O(1) | O(1) | Ambas consultan directamente el tamano de su estructura interna |
@@ -49,11 +49,15 @@ comparar su complejidad.
   a lo sumo una vez.
 - Invariante de representacion: no hay dos pares con el mismo
   `producto`; ningun par tiene `cantidad <= 0`.
+- Los casos no validos devuelven `False` sin modificar `_items`; las
+  operaciones que salen bien devuelven `True`.
 
 ### `carrito_dict.Carrito`
 
 - `_cantidades`: diccionario `producto -> cantidad`.
 - Invariante de representacion: ninguna clave tiene valor `<= 0`.
+- Los casos no validos devuelven `False` sin modificar `_cantidades`;
+  las operaciones que salen bien devuelven `True`.
 
 ## 5. Riesgos tecnicos
 

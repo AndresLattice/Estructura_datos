@@ -27,8 +27,10 @@ Uso real medido en un día:
 
 1. **Las posiciones empiezan en 0.** La primera canción está en la posición 0.
 2. **Se puede insertar en la posición `tamaño`.** Así se agrega al final.
-3. **Una posición inválida lanza `PosicionInvalidaError`.** Incluye negativas y
-   cualquier operación sobre una lista vacía. La lista no cambia si hay error.
+3. **Una posición inválida no cambia la lista.** Incluye negativas y cualquier
+   operación sobre una lista vacía. `insertar` devuelve `False`, y `obtener` y
+   `eliminar` devuelven `None`. Por eso no se guarda `None` como canción: no se
+   podría distinguir de una posición inválida.
 4. **`eliminar` devuelve la canción retirada.** Así se sabe cuál salió.
 5. **`buscar` devuelve la primera posición donde aparece, o `-1`.**
 
@@ -37,13 +39,14 @@ Uso real medido en un día:
 | Operación | Precondición | Resultado |
 |---|---|---|
 | `tamaño()` | — | Cantidad de canciones (0 o más) |
-| `insertar(posicion, elemento)` | `0 <= posicion <= tamaño` | El elemento queda en `posicion`, el tamaño sube 1 y el orden de las demás se conserva |
+| `insertar(posicion, elemento)` | `0 <= posicion <= tamaño` | El elemento queda en `posicion`, el tamaño sube 1, el orden de las demás se conserva y devuelve `True` |
 | `obtener(posicion)` | `0 <= posicion < tamaño` | Devuelve la canción de esa posición |
 | `eliminar(posicion)` | `0 <= posicion < tamaño` | Devuelve la canción retirada, el tamaño baja 1 y el orden de las demás se conserva |
 | `buscar(elemento)` | — | Posición de la primera aparición, o `-1` |
-| Recorrer | — | Visita todas las canciones en orden, de la 0 a la última |
+| `a_lista()` (recorrer) | — | Visita todas las canciones en orden, de la 0 a la última, y las devuelve en una lista de Python |
 
-Si la precondición no se cumple: `PosicionInvalidaError`.
+Si la precondición no se cumple, la lista no cambia: `insertar` devuelve
+`False`, y `obtener` y `eliminar` devuelven `None`.
 
 ## 5. Invariantes
 
@@ -59,10 +62,10 @@ Si la precondición no se cumple: `PosicionInvalidaError`.
 | CA-02 | Insertar en una lista vacía deja tamaño 1 y la canción accesible | `test_insertar_en_vacia` | test_lista.py |
 | CA-03 | Insertar al principio conserva el orden de las demás | `test_insertar_inicio` | test_lista.py |
 | CA-04 | `eliminar` devuelve la canción y baja el tamaño | `test_eliminar` | test_lista.py |
-| CA-05 | Una posición inválida lanza `PosicionInvalidaError` | `test_posicion_invalida` | test_lista.py |
+| CA-05 | Con una posición inválida, `obtener` devuelve `None`, `insertar` devuelve `False` y el tamaño no cambia | `test_posicion_invalida` | test_lista.py |
 | CA-06 | `buscar` devuelve `-1` si la canción no está | `test_buscar_ausente` | test_lista.py |
 | CA-07 | Insertar 100 canciones seguidas no pierde ni desordena ninguna | `test_redimensionamiento` | test_lista.py |
-| CA-08 | Lista vacía: `obtener` y `eliminar` lanzan error y el tamaño sigue en 0 | `test_eliminar_de_vacia_lanza` | test_extremos.py |
+| CA-08 | Lista vacía: `obtener` y `eliminar` devuelven `None` y el tamaño sigue en 0 | `test_eliminar_de_vacia` | test_extremos.py |
 | CA-09 | Un elemento: insertar el primero deja tamaño 1 | `test_insertar_en_vacia_fija_cabeza_y_cola` | test_extremos.py |
 | CA-10 | Un elemento: borrarlo deja la lista vacía, consistente y con tamaño 0 | `test_eliminar_unico_deja_lista_consistente` | test_extremos.py |
 | CA-11 | Borrar el primero baja el tamaño y conserva el resto en orden | `test_eliminar_cabeza_con_varios` | test_extremos.py |
@@ -73,9 +76,6 @@ Si la precondición no se cumple: `PosicionInvalidaError`.
 `test_lista.py` corre con las dos listas. En `test_extremos.py`, CA-08 y CA-14
 corren con las dos, y CA-09 a CA-13 verifican la lista enlazada (donde estos
 casos fallan con más facilidad).
-
-`test_redimensionamiento` (CA-07) no lleva el identificador en su docstring
-porque `test_lista.py` no se puede modificar; su criterio es CA-07.
 
 ## 7. Historial de cambios
 

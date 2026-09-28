@@ -27,21 +27,22 @@ cualquier operacion.
 
 ### 3.1 ¿Se puede quitar un producto que no esta en el carrito?
 
-**Decision:** no. Se rechaza con un error.
+**Decision:** no. `quitar` devuelve `False` y el carrito no cambia.
 
 **Razon:** un carrito real no permite "quitar" algo que nunca existio
 en el carrito.
 
 ### 3.2 ¿Que pasa si la cantidad indicada es cero?
 
-**Decision:** tanto agregar como quitar rechazan cantidad 0 con un error.
+**Decision:** tanto agregar como quitar devuelven `False` si la cantidad
+es 0, y el carrito no cambia.
 
 **Razon:** operar con cero unidades no tiene sentido.
 
 ### 3.3 ¿El carrito admite cantidades negativas?
 
-**Decision:** no. La cantidad de cualquier operacion debe ser un entero
-mayor que 0. "Restar" se expresa quitando, no agregando una cantidad
+**Decision:** no. La cantidad de cualquier operacion debe ser mayor
+que 0; si no lo es, la operacion devuelve `False`. "Restar" se expresa quitando, no agregando una cantidad
 negativa.
 
 **Razon:** permitir negativos en la operacion de agregar crearia dos
@@ -58,15 +59,24 @@ mostrar el total. (Sugerencia de la IA)
 
 ### 3.5 ¿Que pasa si se pide quitar mas cantidad de la que hay?
 
-**Decision:** se rechaza con un error; no se quita "lo que haya y
-listo".
+**Decision:** `quitar` devuelve `False` y el carrito no cambia; no se
+quita "lo que haya y listo".
 
 **Razon:** pedir quitar mas de lo que existe casi siempre delata que
 quien llama al carrito perdio la cuenta de las unidades disponibles. Es
 ademas coherente con 3.3: el carrito nunca debe quedar con una cantidad
 negativa de un producto.
 
-### 3.6 ¿Los nombres de producto distinguen mayusculas de minusculas?
+### 3.6 ¿El carrito revisa que la cantidad sea un numero entero?
+
+**Decision:** no. Que la cantidad sea un entero es una precondicion:
+es responsabilidad de quien llama al carrito pasar un entero. El
+carrito solo revisa que sea mayor que 0.
+
+**Razon:** mantener el codigo con las herramientas vistas en clase;
+revisar el tipo del dato exigiria herramientas que no se han usado.
+
+### 3.7 ¿Los nombres de producto distinguen mayusculas de minusculas?
 
 **Decision:** si, la comparacion es exacta, sin normalizar mayusculas ni
 espacios.
@@ -83,8 +93,9 @@ que solo administra cantidades.
 - **Precondiciones:** `cantidad` es un entero mayor que 0.
 - **Postcondiciones:** si `producto` ya estaba en el carrito, su
   cantidad aumenta en `cantidad`; si no estaba, queda registrado con esa
-  cantidad.
-- **Errores:** se rechaza si `cantidad` no es un entero mayor que 0.
+  cantidad. Devuelve `True`.
+- **Casos no validos:** si `cantidad` no es mayor que 0, devuelve
+  `False` y el carrito no cambia.
 
 ### `quitar(producto, cantidad)`
 
@@ -94,10 +105,10 @@ que solo administra cantidades.
   `cantidad`.
 - **Postcondiciones:** la cantidad de `producto` disminuye en
   `cantidad`; si llega a 0, el producto deja de estar registrado en el
-  carrito.
-- **Errores:** se rechaza si `cantidad` no es un entero mayor que 0, si
-  `producto` no esta en el carrito, o si se pide quitar mas cantidad de
-  la disponible.
+  carrito. Devuelve `True`.
+- **Casos no validos:** devuelve `False` y el carrito no cambia si
+  `cantidad` no es mayor que 0, si `producto` no esta en el carrito, o si
+  se pide quitar mas cantidad de la disponible.
 
 ### `cantidad_de(producto)`
 
@@ -105,7 +116,7 @@ que solo administra cantidades.
   carrito.
 - **Postcondiciones:** devuelve la cantidad registrada de `producto`, o
   0 si el producto no esta en el carrito.
-- **Errores:** ninguno; es una consulta y nunca falla.
+- **Casos no validos:** ninguno; es una consulta y nunca falla.
 
 ### `total()`
 
@@ -123,7 +134,7 @@ que solo administra cantidades.
 ## 5. Invariantes
 
 - INV-01: todo producto registrado en el carrito tiene una cantidad
-  entera mayor que 0. No existen productos con cantidad 0 o negativa.
+  mayor que 0. No existen productos con cantidad 0 o negativa.
 - INV-02: `total()` es siempre igual a la suma de `cantidad_de(p)` para
   todo producto `p` alguna vez agregado y no retirado por completo.
 
@@ -134,20 +145,19 @@ que solo administra cantidades.
 | CA-01 | Un carrito recien creado esta vacio | test_carrito_nuevo_esta_vacio |
 | CA-02 | El total de un carrito vacio es 0 | test_total_de_carrito_vacio_es_cero |
 | CA-03 | Consultar la cantidad de un producto ausente en un carrito vacio devuelve 0 | test_cantidad_de_producto_ausente_en_carrito_vacio_es_cero |
-| CA-04 | Quitar de un carrito vacio se rechaza | test_quitar_de_carrito_vacio_lanza_error |
+| CA-04 | Quitar de un carrito vacio devuelve False | test_quitar_de_carrito_vacio_devuelve_false |
 | CA-05 | Agregar un producto nuevo lo deja registrado con esa cantidad | test_agregar_un_producto_nuevo |
 | CA-06 | Agregar el mismo producto dos veces acumula la cantidad | test_agregar_el_mismo_producto_dos_veces_acumula |
 | CA-07 | Agregar productos distintos los mantiene separados y el total los suma | test_agregar_productos_distintos |
-| CA-08 | Agregar cantidad 0 se rechaza | test_agregar_cantidad_cero_lanza_error |
-| CA-09 | Agregar cantidad negativa se rechaza | test_agregar_cantidad_negativa_lanza_error |
-| CA-10 | Agregar una cantidad no entera se rechaza | test_agregar_cantidad_no_entera_lanza_error |
+| CA-08 | Agregar cantidad 0 devuelve False | test_agregar_cantidad_cero_devuelve_false |
+| CA-09 | Agregar cantidad negativa devuelve False | test_agregar_cantidad_negativa_devuelve_false |
 | CA-11 | Los nombres de producto distinguen mayusculas de minusculas | test_nombres_de_producto_distinguen_mayusculas |
 | CA-12 | Quitar una cantidad parcial reduce lo registrado | test_quitar_parcialmente |
 | CA-13 | Quitar toda la cantidad de un producto lo elimina del carrito | test_quitar_todo_elimina_el_producto |
-| CA-14 | Quitar un producto no registrado se rechaza | test_quitar_producto_inexistente_lanza_error |
-| CA-15 | Quitar mas cantidad de la disponible se rechaza y no altera el carrito | test_quitar_mas_de_lo_que_hay_lanza_error |
-| CA-16 | Quitar cantidad 0 se rechaza | test_quitar_cantidad_cero_lanza_error |
-| CA-17 | Quitar cantidad negativa se rechaza | test_quitar_cantidad_negativa_lanza_error |
+| CA-14 | Quitar un producto no registrado devuelve False | test_quitar_producto_inexistente_devuelve_false |
+| CA-15 | Quitar mas cantidad de la disponible devuelve False y no altera el carrito | test_quitar_mas_de_lo_que_hay_devuelve_false |
+| CA-16 | Quitar cantidad 0 devuelve False | test_quitar_cantidad_cero_devuelve_false |
+| CA-17 | Quitar cantidad negativa devuelve False | test_quitar_cantidad_negativa_devuelve_false |
 | CA-18 | El total suma las cantidades de todos los productos registrados | test_total_suma_todos_los_productos |
 | CA-19 | El total refleja correctamente una operacion de quitar posterior | test_total_despues_de_quitar |
 
@@ -157,7 +167,6 @@ que solo administra cantidades.
 - Quitar un producto que no esta (CA-04, CA-14).
 - Cantidad cero al agregar o quitar (CA-08, CA-16).
 - Cantidad negativa al agregar o quitar (CA-09, CA-17).
-- Cantidad no entera al agregar (CA-10).
 - Quitar mas de lo disponible (CA-15).
 - Quitar exactamente toda la cantidad disponible (CA-13).
 - Sensibilidad a mayusculas/minusculas en el nombre del producto (CA-11).

@@ -1,107 +1,75 @@
-# Código base — Semana 04
-# Fuente: 01-Momento-1-Contrato-y-secuencia/04-Semana-04-Arreglos-y-estructuras-estaticas/02-guia-de-laboratorio.html
-
-from array import array
-
-
-class PosicionInvalidaError(IndexError):
-    """La posición solicitada está fuera del rango válido."""
-
-
 class ListaArreglo:
-    """Lista implementada sobre un arreglo de tamaño fijo con redimensionamiento.
-
-    Atributos internos:
-        _datos      arreglo subyacente (capacidad fija en cada momento)
-        _capacidad  cuántas posiciones tiene el arreglo
-        _tamaño     cuántas posiciones están realmente ocupadas
-
-    Invariante de representación: 0 <= _tamaño <= _capacidad
-
-    Complejidad:
-        obtener          -> O(1)
-        insertar(final)  -> O(1) amortizado
-        insertar(inicio) -> O(n)
-        eliminar         -> O(n)
-        buscar           -> O(n)
-    """
-
-    CAPACIDAD_INICIAL = 4
+    # Las canciones se guardan una junto a otra en "datos", que tiene
+    # "capacidad" espacios. Solo los primeros "cantidad" estan ocupados.
 
     def __init__(self):
-        self._capacidad = self.CAPACIDAD_INICIAL
-        self._datos = [None] * self._capacidad
-        self._tamaño = 0
-
-    # ---------- operaciones públicas ----------
+        self.capacidad = 4
+        self.datos = []
+        for i in range(self.capacidad):
+            self.datos.append(None)
+        self.cantidad = 0
 
     def tamaño(self):
-        return self._tamaño
+        """O(1)."""
+        return self.cantidad
 
     def obtener(self, posicion):
-        """Devuelve el elemento en `posicion`. O(1)."""
-        self._validar(posicion, incluir_final=False)
-        return self._datos[posicion]
+        """O(1). Devuelve None si la posicion no es valida."""
+        if posicion < 0 or posicion >= self.cantidad:
+            return None
+        return self.datos[posicion]
 
     def insertar(self, posicion, elemento):
-        """Inserta desplazando los elementos siguientes hacia la derecha."""
-        self._validar(posicion, incluir_final=True)
-        if self._tamaño == self._capacidad:
-            self._redimensionar(self._capacidad * 2)
-        # Desplaza desde el FINAL hacia atrás. ¿Por qué desde el final?
-        # Si lo haces desde el principio, sobrescribes los datos.
-        # muevo cada uno un lugar a la derecha para dejar libre "posicion"
-        for i in range(self._tamaño, posicion, -1):
-            self._datos[i] = self._datos[i - 1]
-        self._datos[posicion] = elemento
-        self._tamaño += 1
+        """O(n) al principio, O(1) al final. Devuelve False si la posicion no es valida."""
+        if posicion < 0 or posicion > self.cantidad:
+            return False
+        if self.cantidad == self.capacidad:
+            self.agrandar()
+        # Muevo cada cancion un lugar a la derecha, empezando por la ultima,
+        # para dejar libre "posicion"
+        i = self.cantidad
+        while i > posicion:
+            self.datos[i] = self.datos[i - 1]
+            i = i - 1
+        self.datos[posicion] = elemento
+        self.cantidad = self.cantidad + 1
+        return True
 
     def eliminar(self, posicion):
-        """Elimina y devuelve el elemento, desplazando los siguientes."""
-        self._validar(posicion, incluir_final=False)
-        elemento = self._datos[posicion]
-        # muevo cada uno un lugar a la izquierda para tapar el hueco
-        for i in range(posicion, self._tamaño - 1):
-            self._datos[i] = self._datos[i + 1]
-        self._tamaño -= 1
-        self._datos[self._tamaño] = None
-        return elemento
+        """O(n). Devuelve la cancion quitada, o None si la posicion no es valida."""
+        if posicion < 0 or posicion >= self.cantidad:
+            return None
+        eliminado = self.datos[posicion]
+        # Muevo cada cancion un lugar a la izquierda para tapar el hueco
+        i = posicion
+        while i < self.cantidad - 1:
+            self.datos[i] = self.datos[i + 1]
+            i = i + 1
+        self.cantidad = self.cantidad - 1
+        self.datos[self.cantidad] = None
+        return eliminado
 
     def buscar(self, elemento):
-        """Devuelve la posición de la primera aparición, o -1."""
-        for i in range(self._tamaño):
-            if self._datos[i] == elemento:
+        """O(n). Devuelve la posicion de la primera aparicion, o -1."""
+        for i in range(self.cantidad):
+            if self.datos[i] == elemento:
                 return i
-        return -1  # no lo encontré
+        return -1
 
-    # ---------- auxiliares ----------
+    def a_lista(self):
+        """O(n). Devuelve las canciones en orden en una lista de Python."""
+        resultado = []
+        for i in range(self.cantidad):
+            resultado.append(self.datos[i])
+        return resultado
 
-    def _validar(self, posicion, incluir_final):
-        limite = self._tamaño if incluir_final else self._tamaño - 1
-        if not 0 <= posicion <= limite:
-            raise PosicionInvalidaError(
-                f"posicion {posicion} fuera de rango [0, {limite}]"
-            )
-
-    def _redimensionar(self, nueva_capacidad):
-        """Crea un arreglo mayor y copia los elementos. O(n)."""
-        nuevos_datos = [None] * nueva_capacidad
-        for i in range(self._tamaño):
-            nuevos_datos[i] = self._datos[i]
-        self._datos = nuevos_datos
-        self._capacidad = nueva_capacidad
-
-    # ---------- protocolo de Python ----------
-
-    def __len__(self):
-        return self._tamaño
-
-    def __getitem__(self, i):
-        return self.obtener(i)
-
-    def __iter__(self):
-        for i in range(self._tamaño):
-            yield self._datos[i]
-
-    def __repr__(self):
-        return f"ListaArreglo({list(self)!r})"
+    def agrandar(self):
+        """O(n). Pasa todo a un espacio con el doble de capacidad."""
+        nueva_capacidad = self.capacidad * 2
+        nuevos_datos = []
+        for i in range(nueva_capacidad):
+            nuevos_datos.append(None)
+        for i in range(self.cantidad):
+            nuevos_datos[i] = self.datos[i]
+        self.datos = nuevos_datos
+        self.capacidad = nueva_capacidad

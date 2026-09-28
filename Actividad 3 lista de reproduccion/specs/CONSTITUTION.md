@@ -16,8 +16,10 @@
 
 - Python 3.11+ y pytest.
 - El proyecto no depende de código de otras carpetas.
-- `test_lista.py` no se modifica, salvo la lista `IMPLEMENTACIONES` que se
-  amplía con `ListaEnlazada`.
+- `test_lista.py` y `test_extremos.py` son los mismos para las dos listas.
+- El código usa solo lo visto en clase: clases, listas, ciclos `for` y
+  `while`, e `if`. Una posición inválida devuelve `None` o `False` en vez de
+  lanzar un error.
 
 ## Definición de terminado
 

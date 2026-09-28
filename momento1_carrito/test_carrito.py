@@ -31,15 +31,14 @@ def test_cantidad_de_producto_ausente_en_carrito_vacio_es_cero(carrito):
     assert carrito.cantidad_de("manzana") == 0
 
 
-def test_quitar_de_carrito_vacio_lanza_error(carrito):
-    """CA-04: quitar de un carrito vacio se rechaza."""
-    with pytest.raises(ValueError):
-        carrito.quitar("manzana", 1)
+def test_quitar_de_carrito_vacio_devuelve_false(carrito):
+    """CA-04: quitar de un carrito vacio devuelve False."""
+    assert carrito.quitar("manzana", 1) is False
 
 
 def test_agregar_un_producto_nuevo(carrito):
     """CA-05: agregar un producto nuevo lo deja registrado con esa cantidad."""
-    carrito.agregar("manzana", 3)
+    assert carrito.agregar("manzana", 3) is True
     assert carrito.cantidad_de("manzana") == 3
     assert carrito.esta_vacio() is False
 
@@ -60,22 +59,14 @@ def test_agregar_productos_distintos(carrito):
     assert carrito.total() == 8
 
 
-def test_agregar_cantidad_cero_lanza_error(carrito):
-    """CA-08: agregar cantidad 0 se rechaza."""
-    with pytest.raises(ValueError):
-        carrito.agregar("manzana", 0)
+def test_agregar_cantidad_cero_devuelve_false(carrito):
+    """CA-08: agregar cantidad 0 devuelve False."""
+    assert carrito.agregar("manzana", 0) is False
 
 
-def test_agregar_cantidad_negativa_lanza_error(carrito):
-    """CA-09: agregar cantidad negativa se rechaza."""
-    with pytest.raises(ValueError):
-        carrito.agregar("manzana", -1)
-
-
-def test_agregar_cantidad_no_entera_lanza_error(carrito):
-    """CA-10: agregar una cantidad no entera se rechaza."""
-    with pytest.raises(ValueError):
-        carrito.agregar("manzana", 1.5)
+def test_agregar_cantidad_negativa_devuelve_false(carrito):
+    """CA-09: agregar cantidad negativa devuelve False."""
+    assert carrito.agregar("manzana", -1) is False
 
 
 def test_nombres_de_producto_distinguen_mayusculas(carrito):
@@ -90,7 +81,7 @@ def test_nombres_de_producto_distinguen_mayusculas(carrito):
 def test_quitar_parcialmente(carrito):
     """CA-12: quitar una cantidad parcial reduce lo registrado."""
     carrito.agregar("manzana", 5)
-    carrito.quitar("manzana", 2)
+    assert carrito.quitar("manzana", 2) is True
     assert carrito.cantidad_de("manzana") == 3
 
 
@@ -102,33 +93,29 @@ def test_quitar_todo_elimina_el_producto(carrito):
     assert carrito.esta_vacio() is True
 
 
-def test_quitar_producto_inexistente_lanza_error(carrito):
-    """CA-14: quitar un producto no registrado se rechaza."""
+def test_quitar_producto_inexistente_devuelve_false(carrito):
+    """CA-14: quitar un producto no registrado devuelve False."""
     carrito.agregar("manzana", 3)
-    with pytest.raises(ValueError):
-        carrito.quitar("pera", 1)
+    assert carrito.quitar("pera", 1) is False
 
 
-def test_quitar_mas_de_lo_que_hay_lanza_error(carrito):
-    """CA-15: quitar mas cantidad de la disponible se rechaza y no altera el carrito."""
+def test_quitar_mas_de_lo_que_hay_devuelve_false(carrito):
+    """CA-15: quitar mas cantidad de la disponible devuelve False y no altera el carrito."""
     carrito.agregar("manzana", 2)
-    with pytest.raises(ValueError):
-        carrito.quitar("manzana", 3)
+    assert carrito.quitar("manzana", 3) is False
     assert carrito.cantidad_de("manzana") == 2
 
 
-def test_quitar_cantidad_cero_lanza_error(carrito):
-    """CA-16: quitar cantidad 0 se rechaza."""
+def test_quitar_cantidad_cero_devuelve_false(carrito):
+    """CA-16: quitar cantidad 0 devuelve False."""
     carrito.agregar("manzana", 3)
-    with pytest.raises(ValueError):
-        carrito.quitar("manzana", 0)
+    assert carrito.quitar("manzana", 0) is False
 
 
-def test_quitar_cantidad_negativa_lanza_error(carrito):
-    """CA-17: quitar cantidad negativa se rechaza."""
+def test_quitar_cantidad_negativa_devuelve_false(carrito):
+    """CA-17: quitar cantidad negativa devuelve False."""
     carrito.agregar("manzana", 3)
-    with pytest.raises(ValueError):
-        carrito.quitar("manzana", -1)
+    assert carrito.quitar("manzana", -1) is False
 
 
 def test_total_suma_todos_los_productos(carrito):
