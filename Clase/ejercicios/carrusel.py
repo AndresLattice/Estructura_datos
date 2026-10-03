@@ -1,5 +1,8 @@
+import os
 import tkinter as tk
 from nodo import Nodo
+
+os.chdir(os.path.dirname(__file__))
 
 
 class ListaCircular:
