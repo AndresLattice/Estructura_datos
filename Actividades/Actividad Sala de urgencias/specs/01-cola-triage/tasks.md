@@ -5,5 +5,5 @@
 - [x] Probar la cola, incluidos los casos extremos.
 - [x] Hacer `Urgencias` con registrar, siguiente, atender, retirar y estado.
 - [x] Probar `Urgencias`.
-- [ ] Hacer las rutas en `main.py`.
-- [ ] `pytest -v` pasa 26/26.
+- [x] Hacer las rutas en `main.py`.
+- [x] `pytest -v` pasa 26/26.

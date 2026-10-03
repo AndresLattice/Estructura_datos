@@ -46,3 +46,10 @@ Se ordena al encolar. Así ver el siguiente y atender son O(1).
 - `urgencias.py`: lógica del hospital.
 - `main.py`: rutas de la API.
 - `test_cola_prioridad.py` y `test_urgencias.py`: pruebas.
+
+## Cómo correrlo
+```bash
+pip install fastapi uvicorn pytest
+pytest -v
+uvicorn main:app --reload
+```
