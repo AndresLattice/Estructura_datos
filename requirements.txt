@@ -1,0 +1,8 @@
+pytest
+fastapi
+uvicorn
+pydantic
+python-dotenv
+matplotlib
+numpy
+pandas
