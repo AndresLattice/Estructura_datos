@@ -28,13 +28,13 @@ Software para la sala de cómputo. Atiende turnos por prioridad sin dejar a nadi
 
 ## Definición de terminado
 
-- [ ] Todos los criterios de aceptación tienen prueba y pasan
-- [ ] El mecanismo contra la espera indefinida se demuestra con una prueba
-- [ ] La tabla de la simulación muestra media y peor espera en los dos escenarios
-- [ ] `recorridos.md` muestra la salida con cola y con pila sobre el mismo árbol
-- [ ] El árbol de prueba está dibujado para verificar a mano
+- [x] Todos los criterios de aceptación tienen prueba y pasan
+- [x] El mecanismo contra la espera indefinida se demuestra con una prueba
+- [x] La tabla de la simulación muestra media y peor espera en los dos escenarios
+- [x] `recorridos.md` muestra la salida con cola y con pila sobre el mismo árbol
+- [x] El árbol de prueba está dibujado para verificar a mano
 - [ ] `pytest` pasa en una máquina limpia
-- [ ] `spec.md`, `plan.md` y `tasks.md` reflejan lo que realmente se hizo
+- [x] `spec.md`, `plan.md` y `tasks.md` reflejan lo que realmente se hizo
 
 ## Uso de asistentes de IA
 
