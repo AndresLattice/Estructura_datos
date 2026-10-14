@@ -8,5 +8,5 @@
 | T4 | Hacer `Cola` y `simulacion.py` | CA-08 | Andrés | Sí |
 | T5 | Hacer `arbol_carpetas.py` con conteo y profundidad | CA-09 a CA-11 | Andrés | Sí |
 | T6 | Hacer `Pila` y los dos listados | CA-12, CA-13 | Andrés | Sí |
-| T7 | Escribir `simulacion.md` y `recorridos.md` | — | Andrés | ( ) |
+| T7 | Escribir `simulacion.md` y `recorridos.md` | — | Andrés | Sí |
 | T8 | `pytest -v` pasa en una máquina limpia | Todos | Andrés | ( ) |
