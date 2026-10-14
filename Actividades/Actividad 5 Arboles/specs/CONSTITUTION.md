@@ -41,3 +41,4 @@ Software para la sala de cómputo. Atiende turnos por prioridad sin dejar a nadi
 Permitido para: ayudar a redactar y organizar los documentos, las pruebas y
 el código a partir de decisiones del autor.
 No permitido para: entregar algo que el autor no pueda explicar.
+Todo aporte de IA se revisa contra la especificación antes de integrarse.
